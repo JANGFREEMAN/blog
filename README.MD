@@ -111,7 +111,6 @@
 ```
 
 ## 评论
-
 1. 评论接口
 > post /posts/:postId/comment/create
 
@@ -126,8 +125,6 @@
     msg:'xxx'
   }
 ```
-
 ## 删评
-
 1. 删除评论路由
 > post /posts/:postId/comment/:commentId/remove
