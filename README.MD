@@ -109,3 +109,19 @@
     msg:'xxx'
   }
 ```
+
+## 评论
+1. 请求删除帖子界面路由
+> post /posts/:postId/comment/create
+
+```js
+  //请求参数
+  {
+    comment:'xxx'
+  }
+  //响应参数
+  {
+    status:'xxx',
+    msg:'xxx'
+  }
+```
