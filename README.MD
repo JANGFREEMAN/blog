@@ -92,15 +92,17 @@
 
 ## 编辑
 
-1. 请求删除帖子界面路由
-> get /posts/:postId/edit
+1. 请求修改帖子页面路由
+> get /posts/:postId
 
-2. 请求删除帖子接口
-> post /signin
+2. 请求修改帖子接口
+> post /posts/:postId/edit
 
 ```js
   //请求参数
   {
+    title : 'xxx',
+    content: '',
     postId:'xxx'
   }
   //响应参数
@@ -111,8 +113,7 @@
 ```
 
 ## 评论
-
-1. 请求删除帖子界面路由
+1. 评论接口
 > post /posts/:postId/comment/create
 
 ```js
@@ -126,3 +127,6 @@
     msg:'xxx'
   }
 ```
+## 删评
+1. 删除评论路由
+> post /posts/:postId/comment/:commentId/remove
