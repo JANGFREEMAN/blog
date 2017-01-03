@@ -109,22 +109,3 @@
     msg:'xxx'
   }
 ```
-
-## 评论
-1. 评论接口
-> post /posts/:postId/comment/create
-
-```js
-  //请求参数
-  {
-    comment:'xxx'
-  }
-  //响应参数
-  {
-    status:'xxx',
-    msg:'xxx'
-  }
-```
-## 删评
-1. 删除评论路由
-> post /posts/:postId/comment/:commentId/remove
