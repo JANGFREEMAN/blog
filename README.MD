@@ -1,5 +1,6 @@
 
 ## 接口与路由
+- [主页](#主页)
 - [注册](#注册)
 - [登录](#登录)
 - [注销](#注销)
@@ -9,29 +10,34 @@
 - [评论](#评论)
 - [删评](#删评)
 
+## 主页
+
+1.去往主页路由
+> get /post
+
 ## 注册
 
-  1. 获取注册页面路由
-  > get /signup
+1. 获取注册页面路由
+> get /signup
 
-  2. 注册请求接口
-  > post /signup
+2. 注册请求接口
+> post /signup
 
-  ```js
-    //请求参数
-    {
-      username:'xxx',
-      password:'xxx',
-      sex:'',
-    }
-    //响应参数
-    {
-      status:'xxx', //success or fail
-      name:'xxx', //错误消息
-      password: '',
-      ...
-    }
-  ```
+```js
+//请求参数
+{
+  username:'xxx',
+  password:'xxx',
+  sex:'',
+}
+//响应参数
+{
+  status:'xxx', //success or fail
+  name:'xxx', //错误消息
+  password: '',
+  ...
+}
+```
 
 ## 登录
 
@@ -42,16 +48,16 @@
 > post /signin
 
 ```js
-  //请求参数
-  {
-    username:'xxx',
-    password:'xxx'
-  }
-  //响应参数
-  {
-    status:'xxx', //success or fail
-    msg:'xxx'
-  }
+//请求参数
+{
+username:'xxx',
+password:'xxx'
+}
+//响应参数
+{
+status:'xxx', //success or fail
+msg:'xxx'
+}
 ```
 
 ## 注销
@@ -60,11 +66,11 @@
 > post /signout
 
 ```js
-  //响应参数
-  {
-    status:'xxx',
-    msg:'xxx'
-  }
+//响应参数
+{
+status:'xxx',
+msg:'xxx'
+}
 ```
 
 ## 发帖
@@ -76,16 +82,16 @@
 > post /signin
 
 ```js
-  //请求参数
-  {
-    title:'xxx',
-    content:'xxx'
-  }
-  //响应参数
-  {
-    status:'xxx',
-    msg:'xxx'
-  }
+//请求参数
+{
+title:'xxx',
+content:'xxx'
+}
+//响应参数
+{
+status:'xxx',
+msg:'xxx'
+}
 ```
 
 ## 删帖
@@ -101,17 +107,17 @@
 > post /posts/:postId/edit
 
 ```js
-  //请求参数
-  {
-    title : 'xxx',
-    content: '',
-    postId:'xxx'
-  }
-  //响应参数
-  {
-    status:'xxx',
-    msg:'xxx'
-  }
+//请求参数
+{
+title : 'xxx',
+content: '',
+postId:'xxx'
+}
+//响应参数
+{
+status:'xxx',
+msg:'xxx'
+}
 ```
 
 ## 评论
@@ -119,15 +125,15 @@
 > post /posts/:postId/comment/create
 
 ```js
-  //请求参数
-  {
-    comment:'xxx'
-  }
-  //响应参数
-  {
-    status:'xxx',
-    msg:'xxx'
-  }
+//请求参数
+{
+comment:'xxx'
+}
+//响应参数
+{
+status:'xxx',
+msg:'xxx'
+}
 ```
 ## 删评
 1. 删除评论路由

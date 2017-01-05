@@ -38,7 +38,7 @@ router(app);
 
 //错误处理
 app.use(function(err,req,res,next){
-    res.send(err);
+    res.send(err.message);
 })
 
 app.listen(8080);

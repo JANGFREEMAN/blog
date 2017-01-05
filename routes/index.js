@@ -15,5 +15,5 @@ module.exports = function(app){
   app.use('/signout',require('./signout'));
 
   //处理与帖子有关的路由
-  // app.use('/posts',require('./posts'));
+  app.use('/posts',require('./posts'));
 }
