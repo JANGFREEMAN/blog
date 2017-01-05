@@ -26,8 +26,10 @@
     }
     //响应参数
     {
-      status:'xxx',
-      msg:'xxx'
+      status:'xxx', //success or fail
+      name:'xxx', //错误消息
+      password: '',
+      ...
     }
   ```
 
@@ -47,7 +49,7 @@
   }
   //响应参数
   {
-    status:'xxx',
+    status:'xxx', //success or fail
     msg:'xxx'
   }
 ```
