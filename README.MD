@@ -95,6 +95,7 @@ msg:'xxx'
 ```
 
 ## 删帖
+
 1. 删除帖子路由
 > get /posts/:postId/remove
 
