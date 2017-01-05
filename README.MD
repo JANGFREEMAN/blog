@@ -101,7 +101,7 @@ msg:'xxx'
 ## 编辑
 
 1. 请求修改帖子页面路由
-> get /posts/:postId
+> get /posts/:postId/edit
 
 2. 请求修改帖子接口
 > post /posts/:postId/edit
@@ -135,6 +135,7 @@ status:'xxx',
 msg:'xxx'
 }
 ```
+
 ## 删评
 1. 删除评论路由
 > post /posts/:postId/comment/:commentId/remove
