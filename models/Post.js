@@ -24,6 +24,10 @@ module.exports = {
     //查询某个用户的博文
     getPostsByAuthor: function(author){
          return Post.find({author:author}).exec();
+    },
+    //增加pv量
+    incPv: function(postId){
+        return Post.update({_id:postId},{$inc:{pv:1}}).exec();
     }
 }
 
