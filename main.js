@@ -1,5 +1,6 @@
 var express = require('express'),
     path = require('path'),
+    fs = require('fs'),
     session = require('express-session'),
     MongoStore = require('connect-mongo')(session),
     config = require('config-lite'),
@@ -29,6 +30,10 @@ app.use(session({
 }));
 
 // 文件是上传中间件
+fs.exists(path.join(__dirname,'public/img'),function(exists){
+  if(!exists)
+    fs.mkdir(path.join(__dirname,'public/img'));
+});
 app.use(require('express-formidable')({
     uploadDir: path.join(__dirname, 'public/img'),// 上传文件目录
     keepExtensions: true// 保留后缀
@@ -38,7 +43,7 @@ router(app);
 
 //错误处理
 app.use(function(err,req,res,next){
-    res.send(err.message);
+    res.send({errmsg:err.message});
 })
 
 app.listen(8080);

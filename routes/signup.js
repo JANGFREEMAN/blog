@@ -10,12 +10,12 @@ var express = require('express'),
     validator = require('validator');
 
 
-//请求注册页面路由(get /siginup)
+//请求注册页面路由(get /signup)
 router.get('/',checkNotLogin,function(req,res){
   res.send('123');
 });
 
-//请求注册接口(post /siginup)
+//请求注册接口(post /signup)
 router.post('/',checkNotLogin,function(req,res){
 
   var name = req.fields.name,
@@ -23,9 +23,8 @@ router.post('/',checkNotLogin,function(req,res){
       repassword = req.fields.repassword,
       gender = req.fields.gender,
       bio = req.fields.bio,
-      msg = {};
+      msg = {},
       avatar = '/img'+req.files.avatar.path.split(path.sep).pop();
-
   //参数校验
     if(!validator.isLength(name,{min:1,max:10})){
       msg.name = '名字请限制在 1-10 个字符';

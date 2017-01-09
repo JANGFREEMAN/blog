@@ -7,7 +7,7 @@ module.exports = {
   },
   checkNotLogin: function(req,res,next){
     if(req.session.user){//已经登录
-      return req.redirect('back');
+      // return res.redirect('back');
     }
     next();
   }
