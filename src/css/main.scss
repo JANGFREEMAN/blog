@@ -70,34 +70,22 @@ body,html{
     padding: 21px 0 0;
   }
 }
-.cf:before,.cf:after{
-  display: table;
-  content: ''
-}
-.cf:after{
-  clear: both
+.avatar {
+  width: 40px;
+  height: 40px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  display: inline-block;
+  margin: 0 10px;
 }
 
-.comment {
-  .comment-left,.comment-middle,.comment-right{
-    display: inline-block;
-  }
-  .comment-left{
-    width: 5%;
-    .avatar {
-      width: 40px;
-      height: 40px;
-      -moz-border-radius: 20px;
-      -webkit-border-radius: 20px;
-      border-radius: 20px;
-      display: inline-block;
-      margin: 0 10px;
-    }
-  }
-  .comment-middle {
-    .author {
-      font-size: 16px;
-      color: #000000;
-    }
-  }
+.comment-author{
+  color:#303030;
+  font-size: 12px;
+  font-weight: 100;
+  margin-right: 10px
+}
+.align-right{
+  text-align: right;
 }

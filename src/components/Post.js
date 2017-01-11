@@ -16,20 +16,25 @@ var ajaxReq = require('../utils/AjaxUtils').ajaxRequest,
 var Comment = ({content,author,time}) => {
   return (
     <ListGroupItem>
-    <div className = 'comment cf'>
-      <div className = 'comment-left'>
-        <a href = ''>
-          <img src = 'http://img6.bdstatic.com/img/image/smallpic/mingxing11.jpeg' className = 'avatar'/>
-        </a>
+      <div className="row">
+        <div className="col-md-1">
+          <a href = ''><img src = 'http://img6.bdstatic.com/img/image/smallpic/mingxing11.jpeg' className = 'avatar'/></a>
+        </div>
+        <div className="col-md-7">
+          <div>
+            <span className = 'comment-author'>张勇翔</span>
+            <time>2016.16.16</time>
+          </div>
+          <div>
+            <span className = 'comment'>这是一条评论</span>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className = 'align-right'>
+            <a href = ''>删除</a>
+          </div>
+        </div>
       </div>
-      <div className = 'comment-middle'>
-        <h2 className = 'author'>张勇翔</h2>
-        <p>这是一条评论</p>
-      </div>
-      <div className = 'comment-right'>
-
-      </div>
-    </div>
     </ListGroupItem>
   )
 }
@@ -65,13 +70,21 @@ var Post = React.createClass({
   },
   render:function(){
     var post = this.state.post,
-        comments = this.state.comments;
+        comments = this.state.comments,
+        commentArr = [];
+    comments.map(comment => {
+      commentArr.push(<Comment content = {comment.content} author = {comment.content} time = {comment.created_at} />)
+    });
     return (
       <div>
         <Article title = {post.title} content = {post.content}  author = {post.author.name} time = {post.created_at} isHidden = {true}/>
         <Panel collapsible defaultExpanded header="留言">
           <ListGroup fill>
-            <Comment />
+            {commentArr}
+            <FormGroup controlId="bio">
+              <ControlLabel>填写评论</ControlLabel>
+              <FormControl componentClass="textarea" placeholder="#请输入评论" name = 'content' id = 'content' rows = '5' />
+            </FormGroup>
           </ListGroup>
         </Panel>
       </div>
