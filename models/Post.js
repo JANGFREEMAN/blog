@@ -1,4 +1,21 @@
-var Post = require('../lib/mongo').Post;
+var Post = require('../lib/mongo').Post,
+    marked = require('marked');
+
+Post.plugin('contentToHtml',{
+    afterFind:function(posts){
+      posts.map(post => {
+         post.content = marked(post.content);
+         return post;
+      })
+      return posts;
+    },
+    afterFindOne:function(post){
+      if(post){
+        post.content = marked(post.content);
+      }
+      return post;
+    }
+});
 
 module.exports = {
     //新建博客
@@ -7,7 +24,7 @@ module.exports = {
     },
     //查询博客
     findByPostId: function(postId){
-        return Post.findOne({_id:postId}).exec();
+        return Post.findOne({_id:postId}).populate({ path: 'author', model: 'User' }).addCreatedAt().contentToHtml().exec();
     },
     //查询用户博客
     findRawPostById: function(postId,author){
@@ -23,11 +40,14 @@ module.exports = {
     },
     //查询某个用户的博文
     getPostsByAuthor: function(author){
-         return Post.find({author:author}).exec();
+         var query = {};
+         if(!author){
+            author:author
+         }
+         return Post.find(query).populate({ path: 'author', model: 'User' }).sort({ _id: -1 }).addCreatedAt().contentToHtml().exec();
     },
     //增加pv量
     incPv: function(postId){
         return Post.update({_id:postId},{$inc:{pv:1}}).exec();
     }
 }
-

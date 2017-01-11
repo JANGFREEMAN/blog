@@ -46,9 +46,9 @@ router.get('/:postId',function(req,res,next){
         }).catch(next);
 });
 
-//post /posts 主页
+//post /posts 主页  /posts?author=xxx
 router.get('/',function(req,res,next){
-    var author = req.session.user? req.session.user._id:'',
+    var author = req.query.author ,
         msg = {};
     PostModel.getPostsByAuthor(author).then(function(result){
         msg.code = 'success';

@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 module.exports = {
+  port: '8081',
   entry: './src/index.js',
   output: {
     path:  './public/assets',

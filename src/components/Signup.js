@@ -7,19 +7,10 @@ import { Button } from 'react-bootstrap';
 import { HelpBlock } from 'react-bootstrap';
 import { Checkbox } from 'react-bootstrap';
 import { Radio } from 'react-bootstrap';
-
+import FieldGroup from './FieldGroup';
 require('../css/main.scss');
 var $ = require('jquery');
 var iFrameForm = require('../utils/AjaxUtils').iFrameForm;
-function FieldGroup({id, label, help, type,name,placeholder}) {
-  return (
-    <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
-      <FormControl type = {type} placeholder = {placeholder} name = {name}/>
-      {help && <HelpBlock>{help}</HelpBlock>}
-    </FormGroup>
-  );
-}
 
 var Signup = React.createClass({
    handleClick:function(){

@@ -7,11 +7,10 @@ module.exports = {
     },
     //删除评论
     removeRawComment: function(commentId,author){
-        return Comment.remove({_id:commentId,author:author}).exec();
+        return Comment.remove({_id:commentId,author:author}).addCreatedAt().exec();
     },
     //获取帖子评论
     getCommentsByPostId:function(postId){
-        return Comment.find({postId:postId}).exec();
+        return Comment.find({postId:postId}).addCreatedAt().exec();
     }
 }
-
