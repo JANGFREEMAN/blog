@@ -13,25 +13,25 @@ require('../css/main.scss');
 var ajaxReq = require('../utils/AjaxUtils').ajaxRequest,
     $ = require('jquery');
 
-var Comment = ({content,author,time}) => {
+var Comment = ({content,author,avatar,time,removeComment}) => {
   return (
     <ListGroupItem>
       <div className="row">
         <div className="col-md-1">
-          <a href = ''><img src = 'http://img6.bdstatic.com/img/image/smallpic/mingxing11.jpeg' className = 'avatar'/></a>
+          <a href = ''><img src = {`/img/${avatar}`} className = 'avatar'/></a>
         </div>
         <div className="col-md-7">
           <div>
-            <span className = 'comment-author'>张勇翔</span>
-            <time>2016.16.16</time>
+            <span className = 'comment-author'>{author}</span>
+            <time>{time}</time>
           </div>
           <div>
-            <span className = 'comment'>这是一条评论</span>
+            <span className = 'comment' dangerouslySetInnerHTML={{__html: content}}></span>
           </div>
         </div>
         <div className="col-md-4">
           <div className = 'align-right'>
-            <a href = ''>删除</a>
+            <a  onClick = {removeComment}>删除</a>
           </div>
         </div>
       </div>
@@ -40,13 +40,49 @@ var Comment = ({content,author,time}) => {
 }
 
 var Post = React.createClass({
+  createComment:function(){
+    ajaxReq('/posts/586e02446b9d4f9a18967426/comment/create','post',{content:$('#content').val()},result => {
+        if(result.code == 'success'){
+          var commentArr = this.state.comments;
+          commentArr.push(result.comment),
+          this.setState(
+            {
+              comments: commentArr
+            }
+          );
+        }
+      }
+    );
+  },
+  removePost:function(){
+    ajaxReq('/posts/586e02446b9d4f9a18967426/remove','get',{},result => {
+        if(result.code == 'success'){
+            console.log(result);
+        }
+      }
+    );
+  },
+  removeComment:function(i){
+    return () => {
+      var post = this.state.post,
+          comment = this.state.comments[i];
+      ajaxReq(`/posts/${post._id}/comment/${comment._id}/remove`,'get',{},result => {
+          if(result.code == 'success'){
+            var comments = this.state.comments;
+            comments.splice(i,1);
+            this.setState({
+              comments: comments
+            });
+          }
+        }
+      );
+    }
+  },
   componentDidMount: function(){
     ajaxReq('/posts/586e02446b9d4f9a18967426','get',{},result => {
         if(result.code == 'success'){
           var post = result.post,
               comments = result.comments;
-              console.log(post);
-              console.log(comments);
           this.setState(
             {
               post: post,
@@ -60,10 +96,10 @@ var Post = React.createClass({
   getInitialState:function(){
     return {
       post:{
-        title: '123',
-        content: '123',
-        author: '123',
-        time: '123'
+        title: '',
+        content: '',
+        author: {},
+        time: ''
       },
       comments:[]
     }
@@ -72,12 +108,12 @@ var Post = React.createClass({
     var post = this.state.post,
         comments = this.state.comments,
         commentArr = [];
-    comments.map(comment => {
-      commentArr.push(<Comment content = {comment.content} author = {comment.content} time = {comment.created_at} />)
+    comments.map((comment,i) => {
+      commentArr.push(<Comment content = {comment.content} removeComment = {this.removeComment(i)} author = {comment.author.name} avatar = {comment.author.avatar} time = {comment.created_at} />)
     });
     return (
       <div>
-        <Article title = {post.title} content = {post.content}  author = {post.author.name} time = {post.created_at} isHidden = {true}/>
+        <Article title = {post.title} content = {post.content}  author = {post.author.name} time = {post.created_at} isHidden = {true} removePost = {this.removePost}/>
         <Panel collapsible defaultExpanded header="留言">
           <ListGroup fill>
             {commentArr}
@@ -85,6 +121,7 @@ var Post = React.createClass({
               <ControlLabel>填写评论</ControlLabel>
               <FormControl componentClass="textarea" placeholder="#请输入评论" name = 'content' id = 'content' rows = '5' />
             </FormGroup>
+            <Button bsStyle="primary" onClick = {this.createComment}>发表</Button>
           </ListGroup>
         </Panel>
       </div>

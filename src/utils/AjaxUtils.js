@@ -44,5 +44,27 @@ module.exports = {
       $(this).remove();
       callBack(result);
     })
+  },
+  /**
+    ajax请求服务端数据
+    @param url 请求地址
+    @param method http的method
+    @param data  请求数据
+    @param callback 请求回调
+  */
+  ajaxRequestPromise: function(url,method='get',data){
+    return new Promise(function(resolve,reject){
+      var _self =this;
+      $.ajax({
+        url: url,
+        data: data,
+        dataType: 'json',
+        type: method,
+        cache: false,
+        success: function(result){
+            resolve(result);
+        },
+      });
+    });
   }
 }

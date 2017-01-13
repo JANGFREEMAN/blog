@@ -5,7 +5,10 @@ var express = require('express'),
     validator = require('validator'),
     UserModel = require('../models/User'),
     PostModel = require('../models/Post'),
-    CommentModel = require('../models/Comment');
+    CommentModel = require('../models/Comment'),
+    moment = require('moment'),
+    objectIdToTimestamp = require('objectid-to-timestamp'),
+    marked = require('marked');
 
 
 //get /posts/create 发帖页面
@@ -32,30 +35,30 @@ router.get('/:postId/edit',checkLogin,function(req,res,next){
 });
 
 //帖子页面 get /posts/:postId
-router.get('/:postId',function(req,res,next){
-    var postId = req.params.postId;
-    Promise.all([PostModel.findByPostId(postId),PostModel.incPv(postId),CommentModel.getCommentsByPostId(postId)])
-        .then(function(results){
-            var post = results[0],
-                comments = results[2],
-                msg = {};
-            msg.code = 'success';
-            msg.post = post;
-            msg.comments = comments;
-            res.send(msg);
-        }).catch(next);
-});
+// router.get('/:postId',function(req,res,next){
+//     var postId = req.params.postId;
+//     Promise.all([PostModel.findByPostId(postId),PostModel.incPv(postId),CommentModel.getCommentsByPostId(postId)])
+//         .then(function(results){
+//             var post = results[0],
+//                 comments = results[2],
+//                 msg = {};
+//             msg.code = 'success';
+//             msg.post = post;
+//             msg.comments = comments;
+//             res.send(msg);
+//         }).catch(next);
+// });
 
 //post /posts 主页  /posts?author=xxx
-router.get('/',function(req,res,next){
-    var author = req.query.author ,
-        msg = {};
-    PostModel.getPostsByAuthor(author).then(function(result){
-        msg.code = 'success';
-        msg.posts = result;
-        res.send(msg);
-    }).catch(next);
-});
+// router.get('/',function(req,res,next){
+//     var author = req.query.author ,
+//         msg = {};
+//     PostModel.getPostsByAuthor(author).then(function(result){
+//         msg.code = 'success';
+//         msg.posts = result;
+//         res.send(msg);
+//     }).catch(next);
+// });
 
 
 //post /posts 发帖
@@ -91,9 +94,11 @@ router.get('/:postId/remove',checkLogin,function(req,res,next){
         author = req.session.user._id,
         msg = {};
     PostModel.removePostById(postId,author).then(function(){
-        msg.code = 'success';
-        msg.msg = '成功';
-        res.send(msg);
+      return CommentModel.removeCommentsByPostId(postId);
+    }).then(() => {
+      msg.code = 'success';
+      msg.msg = '成功';
+      res.send(msg);
     }).catch(next);
 });
 
@@ -124,9 +129,13 @@ router.post('/:postId/comment/create',checkLogin,function(req,res,next){
            postId: postId
        },
        msg = {};
-    CommentModel.create(comment).then(function(){
+    CommentModel.create(comment).then(function(result){
         msg.code = 'success';
         msg.msg = 'success';
+        msg.comment = result.ops[0];
+        msg.comment.created_at = moment(objectIdToTimestamp(msg.comment._id)).format('YYYY-MM-DD HH:mm');
+        msg.comment.content = marked(msg.comment.content);
+        msg.comment.author = req.session.user;
         res.send(msg);
     }).catch(next);
 });
