@@ -41,7 +41,7 @@ var Comment = ({content,author,avatar,time,removeComment}) => {
 
 var Post = React.createClass({
   createComment:function(){
-    ajaxReq('/posts/586e02446b9d4f9a18967426/comment/create','post',{content:$('#content').val()},result => {
+    ajaxReq(`/posts/${this.props.params.postId}/comment/create`,'post',{content:$('#content').val()},result => {
         if(result.code == 'success'){
           var commentArr = this.state.comments;
           commentArr.push(result.comment),
@@ -55,9 +55,9 @@ var Post = React.createClass({
     );
   },
   removePost:function(){
-    ajaxReq('/posts/586e02446b9d4f9a18967426/remove','get',{},result => {
+    ajaxReq(`/posts/${this.props.params.postId}/remove`,'get',{},result => {
         if(result.code == 'success'){
-            console.log(result);
+            window.location.href = '/#/posts';
         }
       }
     );
@@ -79,7 +79,7 @@ var Post = React.createClass({
     }
   },
   componentDidMount: function(){
-    ajaxReq('/posts/586e02446b9d4f9a18967426','get',{},result => {
+    ajaxReq(`/posts/${this.props.params.postId}`,'get',{},result => {
         if(result.code == 'success'){
           var post = result.post,
               comments = result.comments;
@@ -113,17 +113,17 @@ var Post = React.createClass({
     });
     return (
       <div>
-        <Article title = {post.title} content = {post.content}  author = {post.author.name} time = {post.created_at} isHidden = {true} removePost = {this.removePost}/>
+        <Article   postId = {post._id} title = {post.title} content = {post.content}  author = {post.author.name} time = {post.created_at}  removePost = {this.removePost}/>
         <Panel collapsible defaultExpanded header="留言">
           <ListGroup fill>
             {commentArr}
-            <FormGroup controlId="bio">
-              <ControlLabel>填写评论</ControlLabel>
-              <FormControl componentClass="textarea" placeholder="#请输入评论" name = 'content' id = 'content' rows = '5' />
-            </FormGroup>
-            <Button bsStyle="primary" onClick = {this.createComment}>发表</Button>
           </ListGroup>
         </Panel>
+        <FormGroup controlId="bio">
+          <ControlLabel>填写评论</ControlLabel>
+          <FormControl componentClass="textarea" placeholder="#请输入评论" name = 'content' id = 'content' rows = '5' />
+        </FormGroup>
+        <Button bsStyle="primary" onClick = {this.createComment}>发表</Button>
       </div>
     );
   }

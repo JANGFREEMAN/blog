@@ -39,10 +39,6 @@ app.use(require('express-formidable')({
     keepExtensions: true// 保留后缀
 }));
 
-// app.get('*', function (request, response){
-//   response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
-// })
-
 router(app);
 
 //错误处理

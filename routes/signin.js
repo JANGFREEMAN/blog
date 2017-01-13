@@ -8,6 +8,7 @@ var express = require('express'),
 
 //get /signin
 router.get('/',checkNotLogin,function(req,res){
+    console.log(123123213);
     res.send('/signin.html');
 });
 

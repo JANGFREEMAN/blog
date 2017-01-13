@@ -9,7 +9,7 @@ import Posts from './components/Posts.js';
 import Post from './components/Post.js';
 
 ReactDOM.render((
-  <Router history={browserHistory }>
+  <Router history={hashHistory }>
     {/* 主页 */}
     <Route path="/" component={Posts}/>
     <Route path="/posts" component={Posts}/>
@@ -19,7 +19,9 @@ ReactDOM.render((
     <Route path="/signup" component={Signup}/>
     {/* 登录页 */}
     <Route path="/signin" component={Signin}/>
-    {/* 发帖或编辑页 */}
-    <Route path="/signin" component={CreateOrEdit}/>
+    {/* 编辑页 */}
+    <Route path="/posts/:postId/edit" component={CreateOrEdit}/>
+    {/* 创建页 */}
+    <Route path="/posts/create" component={CreateOrEdit}/>
   </Router>
 ), document.getElementById('app'));

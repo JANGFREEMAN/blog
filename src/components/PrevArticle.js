@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-var Article = ({postId,title,content,author,time,removePost}) => {
+var PrevArticle = ({title,content,author,time,postId}) => {
   return (
     <article className = 'post'>
       <div className = 'post-head'>
@@ -12,11 +12,10 @@ var Article = ({postId,title,content,author,time,removePost}) => {
       <div className = 'post-content'>
         <p dangerouslySetInnerHTML={{__html: content}}></p>
       </div>
-      <div className = 'post-footer' >
-        <a href = {`/#/posts/${postId}/edit`}>编辑</a>&nbsp;&nbsp;
-        <a  onClick = {removePost}>删除</a>
+      <div className = 'post-button' >
+        <a href = {`/#/posts/${postId}`}>阅读全文</a>
       </div>
     </article>
   )
 }
-export default Article;
+export default PrevArticle;

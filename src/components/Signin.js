@@ -25,7 +25,9 @@ var Signup = React.createClass({
     handleClick:function(){
       ajaxReq('/signin','post',{name:$('#name').val(),password:$('#password').val()},
         function(results){
-          console.log(results);
+            if(results.code == 'success'){
+              window.location.href = '/#/posts';
+            }
         });
     },
    render: function(){

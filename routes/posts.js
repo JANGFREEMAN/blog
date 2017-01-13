@@ -35,30 +35,31 @@ router.get('/:postId/edit',checkLogin,function(req,res,next){
 });
 
 //帖子页面 get /posts/:postId
-// router.get('/:postId',function(req,res,next){
-//     var postId = req.params.postId;
-//     Promise.all([PostModel.findByPostId(postId),PostModel.incPv(postId),CommentModel.getCommentsByPostId(postId)])
-//         .then(function(results){
-//             var post = results[0],
-//                 comments = results[2],
-//                 msg = {};
-//             msg.code = 'success';
-//             msg.post = post;
-//             msg.comments = comments;
-//             res.send(msg);
-//         }).catch(next);
-// });
+router.get('/:postId',function(req,res,next){
+    var postId = req.params.postId;
+    Promise.all([PostModel.findByPostId(postId),PostModel.incPv(postId),CommentModel.getCommentsByPostId(postId)])
+        .then(function(results){
+            var post = results[0],
+                comments = results[2],
+                msg = {};
+            msg.code = 'success';
+            msg.post = post;
+            msg.comments = comments;
+            res.send(msg);
+        }).catch(next);
+});
 
 //post /posts 主页  /posts?author=xxx
-// router.get('/',function(req,res,next){
-//     var author = req.query.author ,
-//         msg = {};
-//     PostModel.getPostsByAuthor(author).then(function(result){
-//         msg.code = 'success';
-//         msg.posts = result;
-//         res.send(msg);
-//     }).catch(next);
-// });
+router.get('/',function(req,res,next){
+    var author = req.query.author ,
+        msg = {};
+    PostModel.getPostsByAuthor(author).then(function(result){
+        msg.code = 'success';
+        msg.posts = result;
+        msg.loginUser = req.session.user;
+        res.send(msg);
+    }).catch(next);
+});
 
 
 //post /posts 发帖
