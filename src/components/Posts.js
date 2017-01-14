@@ -36,7 +36,7 @@ var Posts = React.createClass({
   //   }.bind(this)
   // },
   componentDidMount: function(){
-    ajaxReq('/posts','get',{},result => {
+    ajaxReq(`/posts?author=${this.props.location.query.author}`,'get',{},result => {
         this.handleAfterReq(result);
       }
     );

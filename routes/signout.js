@@ -7,7 +7,7 @@ var express = require('express'),
 router.get('/',checkLogin,function(req,res){
     //清楚session中的user即可
     delete req.session.user;
-    res.send({code:'success',msg:'退出成功'});
+    return res.redirect('/#/posts');
 });
 
 module.exports = router;

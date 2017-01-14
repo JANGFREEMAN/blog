@@ -54,9 +54,10 @@ router.post('/',checkNotLogin,function(req,res){
             //将user写入session中
             user = result['ops'][0];
             delete user.password;
-            req.session.user;
+            req.session.user = user;
             msg.code  = 'success';
             msg.msg = '注册成功';
+            msg.author = user.name;
         }).catch(function(e){
             msg.code = 'fail';
             //注册失败，删除头像

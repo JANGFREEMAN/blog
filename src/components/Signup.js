@@ -15,7 +15,9 @@ var iFrameForm = require('../utils/AjaxUtils').iFrameForm;
 var Signup = React.createClass({
    handleClick:function(){
      iFrameForm('/signup','post',$('#form'),function(result){
-        console.log(result);
+        if(result.code == 'success'){
+          window.location.href = '/#/posts?author='+result.author;
+        }
      })
    },
    render: function(){
