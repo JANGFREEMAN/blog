@@ -15,16 +15,16 @@ ReactDOM.render((
       {/* 主页 */}
       <Route path="/" component={Posts}/>
       <Route path="/posts" component={Posts}/>
+      {/* 编辑页 */}
+      <Route path="/posts/:postId/edit" component={CreateOrEdit}/>
+      {/* 创建页 */}
+      <Route path="/posts/create" component={CreateOrEdit}/>
       {/* 文章页 */}
       <Route path="/posts/:postId" component={Post}/>
       {/* 注册页 */}
       <Route path="/signup" component={Signup}/>
       {/* 登录页 */}
       <Route path="/signin" component={Signin}/>
-      {/* 编辑页 */}
-      <Route path="/posts/:postId/edit" component={CreateOrEdit}/>
-      {/* 创建页 */}
-      <Route path="/posts/create" component={CreateOrEdit}/>
     </Router>
   </Router>
 ), document.getElementById('app'));

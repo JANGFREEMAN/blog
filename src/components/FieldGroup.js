@@ -9,7 +9,7 @@ var FieldGroup = function({id, label, help, type,name,placeholder,value}) {
   return (
     <FormGroup controlId={id}>
       <ControlLabel>{label}</ControlLabel>
-      <FormControl type = {type} placeholder = {placeholder} name = {name} value = {value}/>
+        <FormControl type = {type} placeholder = {placeholder} name = {name} />
       {help && <HelpBlock>{help}</HelpBlock>}
     </FormGroup>
   );

@@ -57,7 +57,7 @@ router.post('/',checkNotLogin,function(req,res){
             req.session.user = user;
             msg.code  = 'success';
             msg.msg = '注册成功';
-            msg.author = user.name;
+            msg.author = user._id;
         }).catch(function(e){
             msg.code = 'fail';
             //注册失败，删除头像

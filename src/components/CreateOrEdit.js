@@ -11,16 +11,20 @@ var ajaxReq = require('../utils/AjaxUtils').ajaxRequest,
     $ = require('jquery');
 var CreateOrEdit = React.createClass({
   componentDidMount:function(){
-    ajaxReq(`/posts/${this.props.params.postId}/edit`,'get',{},function(result){
-      if(result.code = 'success'){
-        this.setState({
-          title: result.post.title,
-          content: result.post.content,
-          buttonText: '修改',
-          headText: '修改博文'
-        });
-      }
-    }.bind(this));
+    if(this.props.params.postId){
+        ajaxReq(`/posts/${this.props.params.postId}/edit`,'get',{},function(result){
+            if(result.code = 'success'){
+                this.setState({
+                    title: result.post.title,
+                    content: result.post.content,
+                    buttonText: '修改',
+                    headText: '修改博文'
+                });
+            }
+            $("#title").val(this.state.title);
+            $('#content').val(this.state.content);
+        }.bind(this));
+    }
   },
   handleClick:function(){
     if(this.state.title.length > 0){
@@ -62,7 +66,7 @@ var CreateOrEdit = React.createClass({
               />
               <FormGroup controlId="bio">
                 <ControlLabel>正文</ControlLabel>
-                <FormControl componentClass="textarea" value = {this.state.content} placeholder="#请输入正文" name = 'content' id = 'content' rows = '10' />
+                  <FormControl componentClass="textarea"  placeholder="#请输入正文" name = 'content' id = 'content' rows = '10' />
               </FormGroup>
               <Button bsStyle="primary" onClick = {this.handleClick}>{this.state.buttonText}</Button>
           </form>

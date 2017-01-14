@@ -46,4 +46,4 @@ app.use(function(err,req,res,next){
     res.send({errmsg:err.message});
 })
 
-app.listen(8080);
+app.listen(8082);

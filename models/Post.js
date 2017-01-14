@@ -41,9 +41,9 @@ module.exports = {
     //查询某个用户的博文
     getPostsByAuthor: function(author){
          var query = {};
-         if(!author){
-            author:author
-         }
+         if(author != "undefined")
+           query.author = author;
+         console.log(query);
          return Post.find(query).populate({ path: 'author', model: 'User' }).sort({ _id: -1 }).addCreatedAt().contentToHtml().exec();
     },
     //增加pv量

@@ -17,7 +17,7 @@ var Posts = React.createClass({
     if(result.code == 'success'){
       var postsArr = [];
       result.posts.map((post,index)=> {
-        postsArr.push(<PrevArticle postId = {post._id} title = {post.title} content = {post.content}  author = {post.author.name} time = {post.created_at}/>);
+        postsArr.push(<PrevArticle postId = {post._id} title = {post.title} content = {post.content}  author = {post.author.name} userId = {post.author._id} time = {post.created_at}/>);
       });
       this.setState({
         postsArr: postsArr

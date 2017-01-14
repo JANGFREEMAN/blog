@@ -39,7 +39,7 @@ var Signup = React.createClass({
             />
             <FieldGroup
               id="repassword"
-              type="repassword"
+              type="password"
               label="重复密码"
               placeholder="重复密码"
               name = 'repassword'

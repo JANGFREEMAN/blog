@@ -18,8 +18,8 @@ var Navigation = React.createClass({
     ajaxReq('/signin/session/user','get',{},result=>{
       var NavItemArr = [];
         if(result.user){
-          NavItemArr.push(<NavItem_  url = {"/#/posts?author="+result.user.name} text = '个人主页'/>);
-          NavItemArr.push(<NavItem_  url = "/#/posts/CreateOrEdit" text = '创建博文'/>);
+          NavItemArr.push(<NavItem_  url = {"/#/posts?author="+result.user._id} text = '个人主页'/>);
+          NavItemArr.push(<NavItem_  url = "/#/posts/create" text = '创建博文'/>);
           NavItemArr.push(<NavItem_  url = "/signout" text = '退出'/>);
         }else{
           NavItemArr.push(<NavItem_  url = "/#/signin" text = '登录'/>);
