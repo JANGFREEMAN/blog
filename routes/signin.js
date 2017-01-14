@@ -8,7 +8,6 @@ var express = require('express'),
 
 //get /signin
 router.get('/',checkNotLogin,function(req,res){
-    console.log(123123213);
     res.send('/signin.html');
 });
 
@@ -33,6 +32,11 @@ router.post('/',checkNotLogin,function(req,res){
     }).then(function(){
         res.send(msg);
     });
+});
+
+//get /signin
+router.get('/session/user',function(req,res){
+    res.send({code:'success',user:req.session.user});
 });
 
 module.exports = router;
