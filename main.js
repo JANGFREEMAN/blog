@@ -7,7 +7,9 @@ var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     multer = require('multer'),
-    router = require('./routes/index.js');
+    router = require('./routes/index.js'),
+    winston = require('winston'),
+    expressWinston = require('express-winston');
 
 // 解析请求体
 // app.use(bodyParser.urlencoded({
@@ -39,7 +41,30 @@ app.use(require('express-formidable')({
     keepExtensions: true// 保留后缀
 }));
 
+app.use(expressWinston.logger({
+    transports: [
+        new (winston.transports.Console)({
+            json: true,
+            colorize: true
+        }),
+        new winston.transports.File({
+            filename: 'logs/success.log'
+        })
+    ]
+}));
 router(app);
+// 错误请求的日志
+app.use(expressWinston.errorLogger({
+    transports: [
+        new winston.transports.Console({
+            json: true,
+            colorize: true
+        }),
+        new winston.transports.File({
+            filename: 'logs/error.log'
+        })
+    ]
+}));
 
 //错误处理
 app.use(function(err,req,res,next){

@@ -51,6 +51,7 @@ router.get('/:postId',function(req,res,next){
 
 //post /posts 主页  /posts?author=xxx
 router.get('/',function(req,res,next){
+    console.log(111111111111111111111111111111111111111111111111111111);
     var author = req.query.author ,
         msg = {};
     PostModel.getPostsByAuthor(author).then(function(result){

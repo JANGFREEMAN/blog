@@ -17,7 +17,7 @@ var Navigation = React.createClass({
       var NavItemArr = [];
       ajaxReq('/signin/session/user','get',{},result=>{
           var NavItemArr = [];
-          if(result.user){
+          if(result.user._id){
               NavItemArr.push(<NavItem_  url = {"/#/posts?author="+result.user._id} text = {result.user.name+'的个人主页'}/>);
               NavItemArr.push(<NavItem_  url = "/#/posts/create" text = '创建博文'/>);
               NavItemArr.push(<NavItem_  url = "/signout" text = '退出'/>);

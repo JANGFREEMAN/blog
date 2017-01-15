@@ -36,12 +36,13 @@ var Posts = React.createClass({
   //   }.bind(this)
   // },
   componentDidMount: function(){
+      console.log(22222222222222222222222222222222222222222222222222222);
     ajaxReq(`/posts?author=${this.props.location.query.author}`,'get',{},result => {
         this.handleAfterReq(result);
       }
     );
   },
-  componentDidUpdate: function(){
+    componentWillReceiveProps: function(){
       ajaxReq(`/posts?author=${this.props.location.query.author}`,'get',{},result => {
               this.handleAfterReq(result);
           }
