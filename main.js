@@ -41,6 +41,7 @@ app.use(require('express-formidable')({
     keepExtensions: true// 保留后缀
 }));
 
+// 正常请求的日志
 app.use(expressWinston.logger({
     transports: [
         new (winston.transports.Console)({
