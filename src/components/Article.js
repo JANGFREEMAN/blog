@@ -1,6 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-var Article = ({postId,title,content,author,time,removePost}) => {
+var Article = ({postId,title,content,author,time,removePost,isShow}) => {
+  const Options = (
+    <div>
+      <a href = {`/#/posts/${postId}/edit`}>编辑</a>&nbsp;&nbsp;
+      <a  onClick = {removePost}>删除</a>
+    </div>
+  );
   return (
     <article className = 'post'>
       <div className = 'post-head'>
@@ -13,8 +19,7 @@ var Article = ({postId,title,content,author,time,removePost}) => {
         <p dangerouslySetInnerHTML={{__html: content}}></p>
       </div>
       <div className = 'post-footer' >
-        <a href = {`/#/posts/${postId}/edit`}>编辑</a>&nbsp;&nbsp;
-        <a  onClick = {removePost}>删除</a>
+        {isShow?Options:[]}
       </div>
     </article>
   )

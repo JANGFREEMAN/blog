@@ -41,6 +41,12 @@ var Posts = React.createClass({
       }
     );
   },
+  componentDidUpdate: function(){
+      ajaxReq(`/posts?author=${this.props.location.query.author}`,'get',{},result => {
+              this.handleAfterReq(result);
+          }
+      );
+  },
   getInitialState:function(){
     return {
       postsArr:[]

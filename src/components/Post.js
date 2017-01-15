@@ -11,14 +11,22 @@ import FieldGroup from './FieldGroup';
 import Article from './Article';
 require('../css/main.scss');
 var ajaxReq = require('../utils/AjaxUtils').ajaxRequest,
+    ajaxPromise = require('../utils/AjaxUtils').ajaxRequestPromise,
     $ = require('jquery');
 
-var Comment = ({content,author,avatar,time,removeComment}) => {
+var Comment = ({content,author,avatar,time,removeComment,isShowDelete}) => {
+  const DeleteButton = (
+    <div className="col-md-4">
+      <div className = 'align-right'>
+        <a  onClick = {removeComment}>删除</a>
+      </div>
+    </div>
+  );
   return (
     <ListGroupItem>
       <div className="row">
         <div className="col-md-1">
-          <a href = ''><img src = {`/img/${avatar}`} className = 'avatar'/></a>
+          <a href = ''><img src = {`${avatar}`} className = 'avatar'/></a>
         </div>
         <div className="col-md-7">
           <div>
@@ -29,11 +37,7 @@ var Comment = ({content,author,avatar,time,removeComment}) => {
             <span className = 'comment' dangerouslySetInnerHTML={{__html: content}}></span>
           </div>
         </div>
-        <div className="col-md-4">
-          <div className = 'align-right'>
-            <a  onClick = {removeComment}>删除</a>
-          </div>
-        </div>
+        {isShowDelete?DeleteButton:[]}
       </div>
     </ListGroupItem>
   )
@@ -50,6 +54,8 @@ var Post = React.createClass({
               comments: commentArr
             }
           );
+        }else{
+            window.location.href = result.url;
         }
       }
     );
@@ -79,19 +85,28 @@ var Post = React.createClass({
     }
   },
   componentDidMount: function(){
-    ajaxReq(`/posts/${this.props.params.postId}`,'get',{},result => {
+    var comments = [],
+        post = [],
+        loginUser = {};
+    ajaxPromise(`/posts/${this.props.params.postId}`,'get',{})
+      .then(result => {
         if(result.code == 'success'){
-          var post = result.post,
-              comments = result.comments;
-          this.setState(
-            {
-              post: post,
-              comments: comments
-            }
-          );
+          comments = result.comments;
+          post = result.post;
         }
-      }
-    );
+        return  ajaxPromise('/signin/session/user','get',{});
+      })
+      .then(result => {
+          if(result.code == 'success'){
+            loginUser = result.user;
+          }
+      }).then(() => {
+        this.setState({
+          comments: comments,
+          post: post,
+          loginUser : loginUser
+        });
+      });
   },
   getInitialState:function(){
     return {
@@ -101,7 +116,8 @@ var Post = React.createClass({
         author: {},
         time: ''
       },
-      comments:[]
+      comments:[],
+      loginUser:{}
     }
   },
   render:function(){
@@ -109,11 +125,11 @@ var Post = React.createClass({
         comments = this.state.comments,
         commentArr = [];
     comments.map((comment,i) => {
-      commentArr.push(<Comment content = {comment.content} removeComment = {this.removeComment(i)} author = {comment.author.name} avatar = {comment.author.avatar} time = {comment.created_at} />)
+      commentArr.push(<Comment content = {comment.content} isShowDelete = {this.state.loginUser._id == comment.author._id ? true:false} removeComment = {this.removeComment(i)} author = {comment.author.name} avatar = {comment.author.avatar} time = {comment.created_at} />)
     });
     return (
       <div>
-        <Article   postId = {post._id} title = {post.title} content = {post.content}  author = {post.author.name} time = {post.created_at}  removePost = {this.removePost}/>
+        <Article   isShow = {post.author._id == this.state.loginUser._id? true:  false} postId = {post._id} title = {post.title} content = {post.content}  author = {post.author.name} time = {post.created_at}  removePost = {this.removePost}/>
         <Panel collapsible defaultExpanded header="留言">
           <ListGroup fill>
             {commentArr}

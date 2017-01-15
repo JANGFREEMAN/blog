@@ -1,14 +1,17 @@
 module.exports = {
   checkLogin: function(req,res,next){
     if(!req.session.user){//未登录
-      return res.redirect('/signin');
+        res.send({code:'authfail',url:'/#/signin'})
+    }else{
+        next();
     }
-    next();
   },
   checkNotLogin: function(req,res,next){
     if(req.session.user){//已经登录
-      // return res.redirect('back');
+        res.send({code:'authfail',url:'/#/posts'})
+    }else{
+        next();
     }
-    next();
+
   }
 }

@@ -27,6 +27,7 @@ var Signup = React.createClass({
         function(results){
             if(results.code == 'success'){
               window.location.href = '/#/posts';
+              // window.location.reload();
             }
         });
     },

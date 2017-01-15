@@ -36,7 +36,11 @@ router.post('/',checkNotLogin,function(req,res){
 
 //get /signin
 router.get('/session/user',function(req,res){
-    res.send({code:'success',user:req.session.user});
+    var user = req.session.user;
+    if(user == undefined){
+      user = {}
+    }
+    res.send({code:'success',user:user});
 });
 
 module.exports = router;

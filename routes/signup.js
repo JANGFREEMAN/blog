@@ -24,7 +24,7 @@ router.post('/',checkNotLogin,function(req,res){
       gender = req.fields.gender,
       bio = req.fields.bio,
       msg = {},
-      avatar = '/img'+req.files.avatar.path.split(path.sep).pop();
+      avatar = '/img/'+req.files.avatar.path.split(path.sep).pop();
   //参数校验
     if(!validator.isLength(name,{min:1,max:10})){
       msg.name = '名字请限制在 1-10 个字符';
