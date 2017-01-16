@@ -10,7 +10,8 @@ import PrevArticle from './PrevArticle';
 
 require('../css/main.scss');
 var ajaxReq = require('../utils/AjaxUtils').ajaxRequest,
-    $ = require('jquery');
+    $ = require('jquery'),
+    redirect = require('../utils/RouterUtils').redirect;
 
 var Posts = React.createClass({
   handleAfterReq:function(result){
@@ -36,17 +37,10 @@ var Posts = React.createClass({
   //   }.bind(this)
   // },
   componentDidMount: function(){
-      console.log(22222222222222222222222222222222222222222222222222222);
     ajaxReq(`/posts?author=${this.props.location.query.author}`,'get',{},result => {
         this.handleAfterReq(result);
       }
     );
-  },
-    componentWillReceiveProps: function(){
-      ajaxReq(`/posts?author=${this.props.location.query.author}`,'get',{},result => {
-              this.handleAfterReq(result);
-          }
-      );
   },
   getInitialState:function(){
     return {
