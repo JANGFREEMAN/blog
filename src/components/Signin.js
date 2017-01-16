@@ -11,6 +11,7 @@ import { Radio } from 'react-bootstrap';
 require('../css/main.scss');
 var $ = require('jquery');
 var ajaxReq = require('../utils/AjaxUtils').ajaxRequest;
+var dialog = require('../utils/ShowDialog').dialog;
 function FieldGroup({id, label, help, type,placeholder}) {
   return (
     <FormGroup controlId={id}>
@@ -28,6 +29,8 @@ var Signup = React.createClass({
             if(results.code == 'success'){
               window.location.href = '/#/posts';
               window.location.reload();
+            }else{
+              dialog(results.msg);
             }
         });
     },

@@ -17,6 +17,8 @@ var Signup = React.createClass({
      iFrameForm('/signup','post',$('#form'),function(result){
         if(result.code == 'success'){
           window.location.href = '/#/posts?author='+result.author;
+        }else{
+            alert(result);
         }
      })
    },

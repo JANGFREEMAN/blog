@@ -4,6 +4,7 @@ var express = require('express'),
     session = require('express-session'),
     MongoStore = require('connect-mongo')(session),
     config = require('config-lite'),
+    pkg = require('./package.json'),
     app = express(),
     bodyParser = require('body-parser'),
     multer = require('multer'),
@@ -72,4 +73,7 @@ app.use(function(err,req,res,next){
     res.send({errmsg:err.message});
 })
 
-app.listen(8082);
+const port = process.env.PORT || config.port;
+app.listen(port, function () {
+  console.log(`${pkg.name} listening on port ${port}`);
+});
