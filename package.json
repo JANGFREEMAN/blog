@@ -8,7 +8,7 @@
     "copy": "copyfiles -f ./src/index.html  ./public",
     "dist": "npm run clean & npm run copy & webpack --env=dist",
     "dev": "npm run clean & npm run copy & webpack-dev-server --hot --inline",
-    "start": " cross-env  NODE_ENV=production pm2 start main.js --node-args='--harmony' --name 'myblog'"
+    "start": " NODE_ENV=production pm2 start main.js --node-args='--harmony' --name 'myblog'"
   },
   "author": "zhangyx",
   "license": "ISC",
