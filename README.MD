@@ -1,4 +1,10 @@
-#地址
+# 效果图
+
+<p algin = 'center'>
+  <img src="http://ww1.sinaimg.cn/large/0067Oxblgy1fclby534ecj31gw0s20x8"/>
+</p>
+
+# 地址
 在线地址： https://zhangyxblog.herokuapp.com/
 源代码地址： https://github.com/JANGFREEMAN/blog
 
